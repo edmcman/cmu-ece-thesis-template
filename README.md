@@ -1,2 +1,0 @@
-cmu-ece-thesis-template
-=======================
