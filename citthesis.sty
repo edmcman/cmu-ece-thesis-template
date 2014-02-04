@@ -1,0 +1,139 @@
+%%%% file citthesis.sty
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{citthesis}[2013/12/02 v0.1 CMU CIT thesis]
+%% Only works with the memoir class!!!!!!!!!!!!!!!
+\@ifclassloaded{memoir}{\let\endcitthesis\relax}{\let\endcitthesis\endinput
+\PackageError{citthesis}{The citthesis package only works with the memoir class}%
+{\@ehd}}
+\endcitthesis
+
+\newcommand*{\setcmuspacing}[1]{%
+\let\Cmuspacing#1
+\Cmuspacing}
+\setcmuspacing{\DoubleSpacing}
+
+%% the fiddle lengths (..ta.. for title/approval page, others for prelims)
+%\newlength{\toptafiddle} \setlength{\toptafiddle}{-.06in} \addtolength{\toptafiddle}{5\onelineskip}
+\newlength{\bottafiddle} \setlength{\bottafiddle}{-1in}
+\newlength{\titlefiddle} \setlength{\titlefiddle}{4\onelineskip}
+%\newlength{\topfiddle} \setlength{\topfiddle}{\toptafiddle}
+%\newlength{\botfiddle} \setlength{\botfiddle}{\onelineskip}
+
+\setlrmarginsandblock{1in}{1in}{*}
+\setulmarginsandblock{1in}{1in}{*}
+\checkandfixthelayout
+
+% Number subsections
+\setsecnumdepth{subsection}
+
+%%%% for the title page and approval page.
+% your title
+\newcommand{\settitle}[1]{\def\asutitle{#1}}
+% you
+\newcommand{\setauthor}[1]{\def\asuauthor{#1}}
+% document type (e.g., thesis)
+\newcommand{\setdoctype}[1]{\def\asudoctype{#1}}
+% possible degree
+\newcommand{\masters}{\def\asudegree{Master of Arts}}
+\newcommand{\doctors}{\def\asudegree{Doctor of Philosophy}}
+% defence date
+\newcommand{\setdefdate}[1]{\def\asudefdate{#1}}
+% graduation date
+\newcommand{\setgraddate}[1]{\def\asugraddate{#1}}
+% committe chair
+\newcommand{\setchair}[1]{\def\asuchair{#1, Chair}}
+% committe co-chairs
+\newcommand{\setchairs}[2]{%
+\def\asuchair{#1, Co-chair \\ #2, Co-chair}}
+% other members (separated by \\s)
+\newcommand{\setmembers}[1]{\def\asumembers{#1\par}}
+% department
+\newcommand{\setdept}[1]{\def\asudept{#1}}
+% degrees
+\newcommand{\setdegrees}[1]{\def\asudegrees{#1}}
+% copyright year
+\newcommand{\setcopyyear}[1]{\def\asucopyyear{#1}}
+
+%% Use them like this, and if you don’t change them you will
+%% get unacceptable title and/or approval pages
+\settitle{AN INCREDIBLE PIECE OF WORK OVER WHICH I HAVE STRUGGLED
+DAY AND NIGHT FOR FAR TOO LONG AND NOW IT IS OVER}
+\setauthor{A. N. Author}
+\setdoctype{Polemic}
+\masters % going for a Masters degree
+%% \doctors % going for a PhD
+\setdefdate{April 2018}
+\setgraddate{May 2021}
+% \setchair{A. Jones} % this one
+\setchairs{A. Jones}{B. Doe} % or this one
+\setmembers{C. Smith \\ D. Somebody \\ Some One Else \\ Yet Another}
+\setdept{The Best Department}
+\setdegrees{B.A. in Art}
+\setcopyyear{2018}
+
+%%% typesets the TITLE page
+\newcommand{\thetitlepage}{{%
+\clearpage
+\thispagestyle{empty}
+\centering
+%\vspace*{\toptafiddle}
+\null\vfill
+{\Large \textbf{\asutitle}}\par
+\vspace*{\titlefiddle}
+%\vfill
+\emph{Submitted in partial fulfillment of the requirements for\\
+the degree of\\
+\asudegree\\
+in\\\asudept}\par
+\vspace*{\titlefiddle}
+%\vfill
+\asuauthor\par
+\vspace{1\onelineskip}
+{\SingleSpace
+%a\\b\\
+\asudegrees
+\par}
+\vspace*{2\titlefiddle}
+%\vfill
+{\SingleSpace
+Carnegie Mellon University\\
+Pittsburgh, PA\par}
+\vspace*{2\onelineskip}
+\asugraddate
+\par
+\enlargethispage{\bottafiddle}
+\clearpage}}
+
+%%% typesets the APPROVAL page
+\newcommand{\approvalpage}{{%
+\thispagestyle{empty}
+\centering
+\vspace*{-\toptafiddle}
+\asutitle \\ by \\ \asuauthor \\[3\onelineskip]
+has been approved \\
+\asudefdate
+
+\vfill
+Graduate Supervisory Committee: \\[-0.5\onelineskip]
+{\SingleSpacing
+\asuchair \\
+\asumembers}
+\vfill
+ACCEPTED BY THE GRADUATE COLLEGE
+\par
+\enlargethispage{\bottafiddle}
+\clearpage}}
+
+%%% typeset the copyright page
+\newcommand{\copyrightpage}{{%
+\clearpage
+\thispagestyle{empty}
+\centering
+\null
+\vfill
+\SingleSpacing
+\copyright\ \asucopyyear\ \asuauthor. \\
+All rights reserved.
+\vfill
+\clearpage
+}}
